@@ -14,8 +14,8 @@ M_earth = 5.9724e24  # kg
 woma.load_eos_tables(['ANEOS_forsterite', 'ANEOS_iron', 'AQUA'])
 
 path = '/home/pt426/Impacts/snapshots'
-path = '/home/pavan/Impacts/sub-neptune-impact-2/snapshots'
-prefix = 'sub_neptune_impact_2'
+# path = '/home/pavan/Impacts/sub-neptune-impact-2/snapshots'
+prefix = 'sub_neptune_impact'
 
 def plot(n, plot_T=False, plot_P=False):
     data = sw.load(f'{path}/{prefix}_{n:04.0f}.hdf5')
@@ -114,4 +114,4 @@ def get_snapshot_data(n):
     T = woma.A1_T_u_rho(u, rho, mat_id)
     P = woma.A1_P_u_rho(u, rho, mat_id)
 
-    return pos, m, id, rho, T, P, mat_id
+    return pos, m, id, rho, T, P, u, mat_id
