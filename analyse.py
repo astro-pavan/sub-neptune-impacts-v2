@@ -115,11 +115,17 @@ def get_snapshot_data(n, file_path=''):
     u, rho, mat_id = np.array(data.gas.internal_energies), np.array(data.gas.densities), np.array(data.gas.material_ids)
 
     COM = np.sum(pos.T * m, axis=1) / np.sum(m)
+    pos_temp = pos - COM
+
+    target_mask = pos_temp[:, 0] < 3
+
+    COM = np.sum(pos[target_mask].T * m[target_mask], axis=1) / np.sum(m[target_mask])
     pos -= COM
 
     mat_id[mat_id == 901] = 304
 
     T = woma.A1_T_u_rho(u, rho, mat_id)
     P = woma.A1_P_u_rho(u, rho, mat_id)
+    s = woma.A1_s_rho_u(rho, u, mat_id)
 
-    return pos, m, id, rho, T, P, u, mat_id, vel
+    return pos, m, id, rho, T, P, s, u, mat_id, vel
